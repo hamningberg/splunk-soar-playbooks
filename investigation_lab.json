@@ -152,9 +152,16 @@
                     "sourcePort": "0_out",
                     "targetNode": "20",
                     "targetPort": "20_in"
+                },
+                {
+                    "id": "port_20_to_port_8",
+                    "sourceNode": "20",
+                    "sourcePort": "20_out",
+                    "targetNode": "8",
+                    "targetPort": "8_in"
                 }
             ],
-            "hash": "07c4b70f09fe87c4c46ce46f6e78cfa8e5620d4a",
+            "hash": "944334b65b8b0299d9cc684841eb757a23fa3841",
             "nodes": {
                 "0": {
                     "data": {
@@ -168,8 +175,8 @@
                     "errors": {},
                     "id": "0",
                     "type": "start",
-                    "x": 20,
-                    "y": -60
+                    "x": 19.999999999999986,
+                    "y": -60.00000000000006
                 },
                 "1": {
                     "data": {
@@ -185,8 +192,8 @@
                     "id": "1",
                     "type": "end",
                     "userCode": "\n    # This function is called after all actions are completed.\n    # summary of all the action and/or all details of actions\n    # can be collected here.\n\n    # summary_json = phantom.get_summary()\n    # if 'result' in summary_json:\n        # for action_result in summary_json['result']:\n            # if 'action_run_id' in action_result:\n                # action_results = phantom.get_action_results(action_run_id=action_result['action_run_id'], result_data=False, flatten=False)\n                # phantom.debug(action_results)\n\n",
-                    "x": 580,
-                    "y": 219.99999999999994
+                    "x": 540,
+                    "y": 340
                 },
                 "10": {
                     "data": {
@@ -626,6 +633,12 @@
                         "functionName": "promote_to_case",
                         "id": "15",
                         "inputs": {
+                            "Hash History": {
+                                "datapaths": [
+                                    "log_file_hash:playbook_output:hash_status"
+                                ],
+                                "deduplicate": false
+                            },
                             "Promotion Reason": {
                                 "datapaths": [
                                     "notify_soc_management:action_result.summary.responses.1"
@@ -820,7 +833,7 @@
                     "errors": {},
                     "id": "2",
                     "type": "action",
-                    "x": 0,
+                    "x": -140,
                     "y": 120
                 },
                 "20": {
@@ -851,8 +864,8 @@
                     "errors": {},
                     "id": "20",
                     "type": "playbook",
-                    "x": 280,
-                    "y": -40
+                    "x": 420,
+                    "y": 120
                 },
                 "3": {
                     "data": {
@@ -1018,8 +1031,8 @@
                     "errors": {},
                     "id": "3",
                     "type": "utility",
-                    "x": 560,
-                    "y": 300
+                    "x": 520,
+                    "y": 420
                 },
                 "4": {
                     "data": {
@@ -1053,7 +1066,7 @@
                     "errors": {},
                     "id": "4",
                     "type": "action",
-                    "x": -280,
+                    "x": -420,
                     "y": 120
                 },
                 "6": {
@@ -1088,7 +1101,7 @@
                     "errors": {},
                     "id": "6",
                     "type": "action",
-                    "x": 280,
+                    "x": 140,
                     "y": 120
                 },
                 "8": {
@@ -1191,10 +1204,10 @@
         "schema": "5.0.6",
         "version": "5.3.0.84310"
     },
-    "create_time": "2023-01-04T21:52:02.597319+00:00",
+    "create_time": "2023-01-04T22:56:04.888613+00:00",
     "draft_mode": false,
     "labels": [
-        "*"
+        "file download"
     ],
     "tags": []
 }

@@ -361,11 +361,14 @@ def promote_to_case(action=None, success=None, container=None, results=None, han
     phantom.debug("promote_to_case() called")
 
     notify_soc_management_result_data = phantom.collect2(container=container, datapath=["notify_soc_management:action_result.summary.responses.1"], action_results=results)
+    log_file_hash_output_hash_status = phantom.collect2(container=container, datapath=["log_file_hash:playbook_output:hash_status"])
 
     notify_soc_management_summary_responses_1 = [item[0] for item in notify_soc_management_result_data]
+    log_file_hash_output_hash_status_values = [item[0] for item in log_file_hash_output_hash_status]
 
     inputs = {
         "promotion_reason": notify_soc_management_summary_responses_1,
+        "hash_history": log_file_hash_output_hash_status_values,
     }
 
     ################################################################################
@@ -458,6 +461,8 @@ def log_file_hash(action=None, success=None, container=None, results=None, handl
 
     # call playbook "My Playbooks on GitHub/log_file_hashes_lab", returns the playbook_run_id
     playbook_run_id = phantom.playbook("My Playbooks on GitHub/log_file_hashes_lab", container=container, inputs=inputs)
+
+    join_check_positives(container=container)
 
     return
 
