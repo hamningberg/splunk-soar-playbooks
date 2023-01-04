@@ -252,6 +252,7 @@ def evaluate_prompt(action=None, success=None, container=None, results=None, han
 
     # call connected blocks if condition 2 matched
     if found_match_2:
+        promote_to_case(action=action, success=success, container=container, results=results, handle=handle)
         return
 
     # check for 'else' condition 3
@@ -350,6 +351,33 @@ def add_comment_set_status_4(action=None, success=None, container=None, results=
     phantom.set_status(container=container, status="closed")
 
     container = phantom.get_container(container.get('id', None))
+
+    return
+
+
+def promote_to_case(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
+    phantom.debug("promote_to_case() called")
+
+    notify_soc_management_result_data = phantom.collect2(container=container, datapath=["notify_soc_management:action_result.summary.responses.1"], action_results=results)
+
+    notify_soc_management_summary_responses_1 = [item[0] for item in notify_soc_management_result_data]
+
+    inputs = {
+        "promotion_reason": notify_soc_management_summary_responses_1,
+    }
+
+    ################################################################################
+    ## Custom Code Start
+    ################################################################################
+
+    # Write your custom code here...
+
+    ################################################################################
+    ## Custom Code End
+    ################################################################################
+
+    # call playbook "My Playbooks on GitHub/case_promotion_lab", returns the playbook_run_id
+    playbook_run_id = phantom.playbook("My Playbooks on GitHub/case_promotion_lab", container=container, name="promote_to_case", inputs=inputs)
 
     return
 
