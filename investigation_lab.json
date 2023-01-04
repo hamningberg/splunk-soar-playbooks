@@ -49,18 +49,6 @@
                     "targetPort": "8_in"
                 },
                 {
-                    "conditions": [
-                        {
-                            "index": 0
-                        }
-                    ],
-                    "id": "port_8_to_port_9",
-                    "sourceNode": "8",
-                    "sourcePort": "8_out",
-                    "targetNode": "9",
-                    "targetPort": "9_in"
-                },
-                {
                     "id": "port_9_to_port_10",
                     "sourceNode": "9",
                     "sourcePort": "9_out",
@@ -121,9 +109,33 @@
                     "sourcePort": "10_out",
                     "targetNode": "15",
                     "targetPort": "15_in"
+                },
+                {
+                    "conditions": [
+                        {
+                            "index": 0
+                        }
+                    ],
+                    "id": "port_8_to_port_16",
+                    "sourceNode": "8",
+                    "sourcePort": "8_out",
+                    "targetNode": "16",
+                    "targetPort": "16_in"
+                },
+                {
+                    "conditions": [
+                        {
+                            "index": 1
+                        }
+                    ],
+                    "id": "port_16_to_port_17",
+                    "sourceNode": "16",
+                    "sourcePort": "16_out",
+                    "targetNode": "17",
+                    "targetPort": "17_in"
                 }
             ],
-            "hash": "5c2df56f721af6f7b92c9b0f8da58a38576a6aa6",
+            "hash": "569f3570c2cc067b6425789960f26c599b8bcdda",
             "nodes": {
                 "0": {
                     "data": {
@@ -138,7 +150,7 @@
                     "id": "0",
                     "type": "start",
                     "x": 19.999999999999986,
-                    "y": -3.836930773104541e-13
+                    "y": -4.476419235288631e-13
                 },
                 "1": {
                     "data": {
@@ -154,8 +166,8 @@
                     "id": "1",
                     "type": "end",
                     "userCode": "\n    # This function is called after all actions are completed.\n    # summary of all the action and/or all details of actions\n    # can be collected here.\n\n    # summary_json = phantom.get_summary()\n    # if 'result' in summary_json:\n        # for action_result in summary_json['result']:\n            # if 'action_run_id' in action_result:\n                # action_results = phantom.get_action_results(action_run_id=action_result['action_run_id'], result_data=False, flatten=False)\n                # phantom.debug(action_results)\n\n",
-                    "x": 400,
-                    "y": 280
+                    "x": 580,
+                    "y": 220
                 },
                 "10": {
                     "data": {
@@ -220,7 +232,7 @@
                     "id": "10",
                     "type": "decision",
                     "x": 80,
-                    "y": 560
+                    "y": 660
                 },
                 "11": {
                     "data": {
@@ -486,7 +498,7 @@
                     "id": "13",
                     "type": "utility",
                     "x": -280,
-                    "y": 700
+                    "y": 800
                 },
                 "14": {
                     "data": {
@@ -582,7 +594,7 @@
                     "id": "14",
                     "type": "utility",
                     "x": 280,
-                    "y": 700
+                    "y": 800
                 },
                 "15": {
                     "data": {
@@ -613,7 +625,149 @@
                     "id": "15",
                     "type": "playbook",
                     "x": 0,
-                    "y": 740
+                    "y": 840
+                },
+                "16": {
+                    "data": {
+                        "advanced": {
+                            "customName": "Source Country Filter",
+                            "customNameId": 0,
+                            "join": []
+                        },
+                        "conditions": [
+                            {
+                                "comparisons": [
+                                    {
+                                        "conditionIndex": 0,
+                                        "op": "in",
+                                        "param": "locate_source:action_result.data.*.country_name",
+                                        "value": "custom_list:Banned Countries"
+                                    }
+                                ],
+                                "conditionIndex": 0,
+                                "customName": "Banned Source",
+                                "logic": "and"
+                            },
+                            {
+                                "comparisons": [
+                                    {
+                                        "conditionIndex": 1,
+                                        "op": "not in",
+                                        "param": "locate_source:action_result.data.*.country_name",
+                                        "value": "custom_list:Banned Countries"
+                                    }
+                                ],
+                                "conditionIndex": 1,
+                                "customName": "Not Banned Source",
+                                "logic": "and"
+                            }
+                        ],
+                        "functionId": 1,
+                        "functionName": "source_country_filter",
+                        "id": "16",
+                        "type": "filter"
+                    },
+                    "errors": {},
+                    "id": "16",
+                    "type": "filter",
+                    "x": 340,
+                    "y": 380
+                },
+                "17": {
+                    "data": {
+                        "advanced": {
+                            "join": [],
+                            "refreshNotableData": true
+                        },
+                        "functionId": 5,
+                        "functionName": "add_comment_set_status_5",
+                        "id": "17",
+                        "selectMore": false,
+                        "tab": "apis",
+                        "type": "utility",
+                        "utilities": {
+                            "comment": {
+                                "description": "",
+                                "fields": [
+                                    {
+                                        "description": "",
+                                        "label": "comment",
+                                        "name": "comment",
+                                        "placeholder": "Enter a comment",
+                                        "renderType": "datapath",
+                                        "required": true
+                                    },
+                                    {
+                                        "hidden": true,
+                                        "name": "container",
+                                        "required": false
+                                    },
+                                    {
+                                        "hidden": true,
+                                        "name": "author",
+                                        "required": false
+                                    },
+                                    {
+                                        "hidden": true,
+                                        "name": "trace",
+                                        "required": false
+                                    }
+                                ],
+                                "label": "add comment",
+                                "name": "comment"
+                            },
+                            "set_status": {
+                                "description": "",
+                                "fields": [
+                                    {
+                                        "choices": "notableStatus",
+                                        "description": "",
+                                        "label": "status",
+                                        "name": "status",
+                                        "placeholder": "Select status",
+                                        "renderType": "dropdown",
+                                        "required": true
+                                    },
+                                    {
+                                        "hidden": true,
+                                        "name": "container",
+                                        "required": false
+                                    },
+                                    {
+                                        "hidden": true,
+                                        "name": "trace",
+                                        "required": false
+                                    }
+                                ],
+                                "label": "set status",
+                                "name": "set_status",
+                                "refreshNotableData": true
+                            }
+                        },
+                        "utilityType": "api",
+                        "values": {
+                            "comment": {
+                                "_internal": [
+                                    "container",
+                                    "author",
+                                    "trace"
+                                ],
+                                "comment": "Hi positives but low risk source"
+                            },
+                            "set_status": {
+                                "_internal": [
+                                    "container",
+                                    "trace"
+                                ],
+                                "status": "closed"
+                            }
+                        }
+                    },
+                    "errors": {},
+                    "id": "17",
+                    "type": "utility",
+                    "x": 280,
+                    "y": 540
                 },
                 "2": {
                     "data": {
@@ -814,8 +968,8 @@
                     "errors": {},
                     "id": "3",
                     "type": "utility",
-                    "x": 380,
-                    "y": 380
+                    "x": 560,
+                    "y": 300
                 },
                 "4": {
                     "data": {
@@ -975,7 +1129,7 @@
                     "id": "9",
                     "type": "prompt",
                     "x": 80,
-                    "y": 420
+                    "y": 520
                 }
             },
             "notes": ""
@@ -987,7 +1141,7 @@
         "schema": "5.0.6",
         "version": "5.3.0.84310"
     },
-    "create_time": "2023-01-04T19:08:42.308176+00:00",
+    "create_time": "2023-01-04T21:16:06.184254+00:00",
     "draft_mode": false,
     "labels": [
         "*"
