@@ -17,6 +17,8 @@ def on_start(container):
     virus_search(container=container)
     # call 'source_reputation' block
     source_reputation(container=container)
+    # call 'log_file_hash' block
+    log_file_hash(container=container)
 
     return
 
@@ -395,7 +397,7 @@ def source_country_filter(action=None, success=None, container=None, results=Non
 
     # call connected blocks if filtered artifacts or results
     if matched_artifacts_1 or matched_results_1:
-        pass
+        notify_soc_management(action=action, success=success, container=container, results=results, handle=handle, filtered_artifacts=matched_artifacts_1, filtered_results=matched_results_1)
 
     # collect filtered artifact ids and results for 'if' condition 2
     matched_artifacts_2, matched_results_2 = phantom.condition(
@@ -429,6 +431,33 @@ def add_comment_set_status_5(action=None, success=None, container=None, results=
     phantom.set_status(container=container, status="closed")
 
     container = phantom.get_container(container.get('id', None))
+
+    return
+
+
+def log_file_hash(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
+    phantom.debug("log_file_hash() called")
+
+    container_artifact_data = phantom.collect2(container=container, datapath=["artifact:*.cef.fileHash"])
+
+    container_artifact_cef_item_0 = [item[0] for item in container_artifact_data]
+
+    inputs = {
+        "hash": container_artifact_cef_item_0,
+    }
+
+    ################################################################################
+    ## Custom Code Start
+    ################################################################################
+
+    # Write your custom code here...
+
+    ################################################################################
+    ## Custom Code End
+    ################################################################################
+
+    # call playbook "My Playbooks on GitHub/log_file_hashes_lab", returns the playbook_run_id
+    playbook_run_id = phantom.playbook("My Playbooks on GitHub/log_file_hashes_lab", container=container, inputs=inputs)
 
     return
 

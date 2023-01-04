@@ -133,9 +133,28 @@
                     "sourcePort": "16_out",
                     "targetNode": "17",
                     "targetPort": "17_in"
+                },
+                {
+                    "conditions": [
+                        {
+                            "index": 0
+                        }
+                    ],
+                    "id": "port_16_to_port_9",
+                    "sourceNode": "16",
+                    "sourcePort": "16_out",
+                    "targetNode": "9",
+                    "targetPort": "9_in"
+                },
+                {
+                    "id": "port_0_to_port_20",
+                    "sourceNode": "0",
+                    "sourcePort": "0_out",
+                    "targetNode": "20",
+                    "targetPort": "20_in"
                 }
             ],
-            "hash": "569f3570c2cc067b6425789960f26c599b8bcdda",
+            "hash": "07c4b70f09fe87c4c46ce46f6e78cfa8e5620d4a",
             "nodes": {
                 "0": {
                     "data": {
@@ -149,8 +168,8 @@
                     "errors": {},
                     "id": "0",
                     "type": "start",
-                    "x": 19.999999999999986,
-                    "y": -4.476419235288631e-13
+                    "x": 20,
+                    "y": -60
                 },
                 "1": {
                     "data": {
@@ -167,7 +186,7 @@
                     "type": "end",
                     "userCode": "\n    # This function is called after all actions are completed.\n    # summary of all the action and/or all details of actions\n    # can be collected here.\n\n    # summary_json = phantom.get_summary()\n    # if 'result' in summary_json:\n        # for action_result in summary_json['result']:\n            # if 'action_run_id' in action_result:\n                # action_results = phantom.get_action_results(action_run_id=action_result['action_run_id'], result_data=False, flatten=False)\n                # phantom.debug(action_results)\n\n",
                     "x": 580,
-                    "y": 220
+                    "y": 219.99999999999994
                 },
                 "10": {
                     "data": {
@@ -625,7 +644,7 @@
                     "id": "15",
                     "type": "playbook",
                     "x": 0,
-                    "y": 840
+                    "y": 860
                 },
                 "16": {
                     "data": {
@@ -767,7 +786,7 @@
                     "id": "17",
                     "type": "utility",
                     "x": 280,
-                    "y": 540
+                    "y": 560
                 },
                 "2": {
                     "data": {
@@ -803,6 +822,37 @@
                     "type": "action",
                     "x": 0,
                     "y": 120
+                },
+                "20": {
+                    "data": {
+                        "advanced": {
+                            "customName": "Log File Hash",
+                            "customNameId": 0,
+                            "join": []
+                        },
+                        "functionId": 1,
+                        "functionName": "log_file_hash",
+                        "id": "20",
+                        "inputs": {
+                            "Hash": {
+                                "datapaths": [
+                                    "artifact:*.cef.fileHash"
+                                ],
+                                "deduplicate": false
+                            }
+                        },
+                        "playbookName": "log_file_hashes_lab",
+                        "playbookRepo": 8,
+                        "playbookRepoName": "My Playbooks on GitHub",
+                        "playbookType": "data",
+                        "synchronous": false,
+                        "type": "playbook"
+                    },
+                    "errors": {},
+                    "id": "20",
+                    "type": "playbook",
+                    "x": 280,
+                    "y": -40
                 },
                 "3": {
                     "data": {
@@ -1141,7 +1191,7 @@
         "schema": "5.0.6",
         "version": "5.3.0.84310"
     },
-    "create_time": "2023-01-04T21:16:06.184254+00:00",
+    "create_time": "2023-01-04T21:52:02.597319+00:00",
     "draft_mode": false,
     "labels": [
         "*"
