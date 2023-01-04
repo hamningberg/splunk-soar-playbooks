@@ -28,7 +28,7 @@
                     "targetPort": "1_in"
                 }
             ],
-            "hash": "0557929f51a8635a5aaa1e0be52be0e4acfa8d49",
+            "hash": "e9bf26cef9d8893ed089f6d8f07c0621d220d7ba",
             "nodes": {
                 "0": {
                     "data": {
@@ -74,9 +74,15 @@
                         "functionName": "compose_report",
                         "id": "2",
                         "parameters": [
-                            ""
+                            "container:url",
+                            "container:name",
+                            "container:name",
+                            "artifact:*.cef.sourceDnsDomain",
+                            "artifact:*.cef.destinationAddress",
+                            "artifact:*.cef.filePath",
+                            "playbook_input:promotion_reason"
                         ],
-                        "template": "A file has been detected that has been\ndetermined to be potentially malicious. A case has been opened.\n\n**Case link**: {0}\n- **Event Name**: {1}\n- **Description**: {2}\n- **Source URL**: {3}\n- **Target Server IP**: {4}\n- **Suspicious File Path**: {5}\n- **Reason for promotion**: {6}",
+                        "template": "A file has been detected that has been\ndetermined to be potentially malicious. A case has been opened.\n\n**Case link**: {0}\n- **Event Name**: {1}\n- **Description**: {2}\n- **Source URL**: {3}\n- **Target Server IP**: {4}\n- **Suspicious File Path**: {5}\n- **Reason for promotion**: {6}{1}\n{2}\n{3}\n{4}\n{5}\n{6}\n",
                         "type": "format"
                     },
                     "errors": {},
@@ -246,7 +252,7 @@
                                     "task_id",
                                     "trace"
                                 ],
-                                "content": "compose_report:formatted_data",
+                                "content": "compose_report:formatted_data.*",
                                 "note_format": "markdown",
                                 "note_type": "general",
                                 "title": "Incident Report"
@@ -284,7 +290,7 @@
         "schema": "5.0.6",
         "version": "5.3.0.84310"
     },
-    "create_time": "2023-01-04T17:01:08.300309+00:00",
+    "create_time": "2023-01-04T18:17:48.641977+00:00",
     "draft_mode": false,
     "labels": [
         "*"

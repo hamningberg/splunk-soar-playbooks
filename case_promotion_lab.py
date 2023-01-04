@@ -19,11 +19,17 @@ def on_start(container):
 def compose_report(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
     phantom.debug("compose_report() called")
 
-    template = """A file has been detected that has been\ndetermined to be potentially malicious. A case has been opened.\n\n**Case link**: {0}\n- **Event Name**: {1}\n- **Description**: {2}\n- **Source URL**: {3}\n- **Target Server IP**: {4}\n- **Suspicious File Path**: {5}\n- **Reason for promotion**: {6}"""
+    template = """A file has been detected that has been\ndetermined to be potentially malicious. A case has been opened.\n\n**Case link**: {0}\n- **Event Name**: {1}\n- **Description**: {2}\n- **Source URL**: {3}\n- **Target Server IP**: {4}\n- **Suspicious File Path**: {5}\n- **Reason for promotion**: {6}{1}\n{2}\n{3}\n{4}\n{5}\n{6}\n"""
 
     # parameter list for template variable replacement
     parameters = [
-        ""
+        "container:url",
+        "container:name",
+        "container:name",
+        "artifact:*.cef.sourceDnsDomain",
+        "artifact:*.cef.destinationAddress",
+        "artifact:*.cef.filePath",
+        "playbook_input:promotion_reason"
     ]
 
     ################################################################################
@@ -50,7 +56,7 @@ def add_comment_add_note_promote_to_case_1(action=None, success=None, container=
     # Later
     ################################################################################
 
-    compose_report = phantom.get_format_data(name="compose_report")
+    compose_report__as_list = phantom.get_format_data(name="compose_report__as_list")
 
     ################################################################################
     ## Custom Code Start
@@ -63,7 +69,7 @@ def add_comment_add_note_promote_to_case_1(action=None, success=None, container=
     ################################################################################
 
     phantom.comment(container=container, comment="Promoted to Case")
-    phantom.add_note(container=container, content=compose_report, note_format="markdown", note_type="general", title="Incident Report")
+    phantom.add_note(container=container, content=compose_report__as_list, note_format="markdown", note_type="general", title="Incident Report")
     phantom.promote(container=container, template="Data Breach")
 
     container = phantom.get_container(container.get('id', None))
