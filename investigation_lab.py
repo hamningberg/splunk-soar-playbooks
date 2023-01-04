@@ -164,7 +164,7 @@ def virus_search(action=None, success=None, container=None, results=None, handle
 def join_check_positives(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
     phantom.debug("join_check_positives() called")
 
-    if phantom.completed(action_names=["locate_source", "source_reputation", "virus_search"]):
+    if phantom.completed(action_names=["locate_source", "source_reputation", "virus_search"], playbook_names=["log_file_hash"]):
         # call connected block "check_positives"
         check_positives(container=container, handle=handle)
 
@@ -460,9 +460,7 @@ def log_file_hash(action=None, success=None, container=None, results=None, handl
     ################################################################################
 
     # call playbook "My Playbooks on GitHub/log_file_hashes_lab", returns the playbook_run_id
-    playbook_run_id = phantom.playbook("My Playbooks on GitHub/log_file_hashes_lab", container=container, inputs=inputs)
-
-    join_check_positives(container=container)
+    playbook_run_id = phantom.playbook("My Playbooks on GitHub/log_file_hashes_lab", container=container, name="log_file_hash", callback=join_check_positives, inputs=inputs)
 
     return
 
