@@ -32,13 +32,13 @@ def decision_1(action=None, success=None, container=None, results=None, handle=N
         return
 
     # check for 'else' condition 2
-    add_to_list_add_comment_1(action=action, success=success, container=container, results=results, handle=handle)
+    add_comment_add_to_list_1(action=action, success=success, container=container, results=results, handle=handle)
 
     return
 
 
-def add_to_list_add_comment_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
-    phantom.debug("add_to_list_add_comment_1() called")
+def add_comment_add_to_list_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
+    phantom.debug("add_comment_add_to_list_1() called")
 
     container_artifact_data = phantom.collect2(container=container, datapath=["artifact:*.cef.fileHash"])
 
@@ -54,8 +54,8 @@ def add_to_list_add_comment_1(action=None, success=None, container=None, results
     ## Custom Code End
     ################################################################################
 
-    phantom.add_list(list_name="Prior Hashes", values=container_artifact_cef_item_0)
     phantom.comment(container=container, comment="File hash has not been observed before.")
+    phantom.add_list(list_name="Prior Hashes", values=container_artifact_cef_item_0)
 
     return
 
