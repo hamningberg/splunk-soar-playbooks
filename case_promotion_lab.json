@@ -28,7 +28,7 @@
                     "targetPort": "1_in"
                 }
             ],
-            "hash": "758427827c8ef9a15a1f05eacb3dc643123d70c1",
+            "hash": "d0963e35ae674c6b8f1204d0e24b4a87ed7ceb5f",
             "nodes": {
                 "0": {
                     "data": {
@@ -43,7 +43,7 @@
                     "id": "0",
                     "type": "start",
                     "x": 1000,
-                    "y": 419.9999999999999
+                    "y": 419.9999999999998
                 },
                 "1": {
                     "data": {
@@ -80,9 +80,10 @@
                             "artifact:*.cef.sourceDnsDomain",
                             "artifact:*.cef.destinationAddress",
                             "artifact:*.cef.filePath",
-                            "playbook_input:promotion_reason"
+                            "playbook_input:promotion_reason",
+                            "playbook_input:hash_history"
                         ],
-                        "template": "A file has been detected that has been determined to be potentially malicious. A case has been opened.\n{1}{2}{3}{4}{5}{6}\n- **Case link**: {0}\n- **Event Name**: {1}\n- **Description**: {2}\n- **Source URL**: {3}\n- **Target Server IP**: {4}\n- **Suspicious File Path**: {5}\n- **Reason for promotion**: {6}",
+                        "template": "A file has been detected that has been determined to be potentially malicious. A case has been opened.\n{1}{2}{3}{4}{5}{6}\n- **Case link**: {0}\n- **Event Name**: {1}\n- **Description**: {2}\n- **Source URL**: {3}\n- **Target Server IP**: {4}\n- **Suspicious File Path**: {5} (*{7}*)\n- **Reason for promotion**: {6}",
                         "type": "format"
                     },
                     "errors": {},
@@ -98,7 +99,7 @@
                             "refreshNotableData": true
                         },
                         "functionId": 1,
-                        "functionName": "promote_to_case_add_comment_add_note_1",
+                        "functionName": "add_comment_promote_to_case_add_note_1",
                         "id": "3",
                         "selectMore": false,
                         "tab": "apis",
@@ -287,6 +288,11 @@
                 "contains": [],
                 "description": "",
                 "name": "Promotion Reason"
+            },
+            {
+                "contains": [],
+                "description": "",
+                "name": "Hash History"
             }
         ],
         "output_spec": null,
@@ -295,7 +301,7 @@
         "schema": "5.0.6",
         "version": "5.3.0.84310"
     },
-    "create_time": "2023-01-04T19:02:22.486729+00:00",
+    "create_time": "2023-01-04T22:51:32.227345+00:00",
     "draft_mode": false,
     "labels": [
         "*"

@@ -19,7 +19,7 @@ def on_start(container):
 def compose_report(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
     phantom.debug("compose_report() called")
 
-    template = """A file has been detected that has been determined to be potentially malicious. A case has been opened.\n{1}{2}{3}{4}{5}{6}\n- **Case link**: {0}\n- **Event Name**: {1}\n- **Description**: {2}\n- **Source URL**: {3}\n- **Target Server IP**: {4}\n- **Suspicious File Path**: {5}\n- **Reason for promotion**: {6}"""
+    template = """A file has been detected that has been determined to be potentially malicious. A case has been opened.\n{1}{2}{3}{4}{5}{6}\n- **Case link**: {0}\n- **Event Name**: {1}\n- **Description**: {2}\n- **Source URL**: {3}\n- **Target Server IP**: {4}\n- **Suspicious File Path**: {5} (*{7}*)\n- **Reason for promotion**: {6}"""
 
     # parameter list for template variable replacement
     parameters = [
@@ -29,7 +29,8 @@ def compose_report(action=None, success=None, container=None, results=None, hand
         "artifact:*.cef.sourceDnsDomain",
         "artifact:*.cef.destinationAddress",
         "artifact:*.cef.filePath",
-        "playbook_input:promotion_reason"
+        "playbook_input:promotion_reason",
+        "playbook_input:hash_history"
     ]
 
     ################################################################################
@@ -44,13 +45,13 @@ def compose_report(action=None, success=None, container=None, results=None, hand
 
     phantom.format(container=container, template=template, parameters=parameters, name="compose_report", drop_none=True)
 
-    promote_to_case_add_comment_add_note_1(container=container)
+    add_comment_promote_to_case_add_note_1(container=container)
 
     return
 
 
-def promote_to_case_add_comment_add_note_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
-    phantom.debug("promote_to_case_add_comment_add_note_1() called")
+def add_comment_promote_to_case_add_note_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
+    phantom.debug("add_comment_promote_to_case_add_note_1() called")
 
     compose_report__as_list = phantom.get_format_data(name="compose_report__as_list")
 
@@ -64,8 +65,8 @@ def promote_to_case_add_comment_add_note_1(action=None, success=None, container=
     ## Custom Code End
     ################################################################################
 
-    phantom.promote(container=container, template="Data Breach")
     phantom.comment(container=container, comment="Promoted to Case")
+    phantom.promote(container=container, template="Data Breach")
     phantom.add_note(container=container, content=compose_report__as_list, note_format="markdown", note_type="general", title="Incident Report")
 
     container = phantom.get_container(container.get('id', None))
